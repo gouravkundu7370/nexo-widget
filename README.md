@@ -7,7 +7,7 @@ Below is a quick demo of the widget in action.
 
 ## **Preview** 🌟
 
-![NEXO Widget Demo](../public/demo.gif)
+![NEXO Widget Demo](./public/demo.gif)
 
 ---
 
