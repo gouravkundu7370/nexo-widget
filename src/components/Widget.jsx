@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import {  useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
@@ -13,36 +13,24 @@ import { ThemeProvider } from "./ThemeProvider";
 import supabase from "@/supabaseClient";
 import { Separator } from "./ui/separator";
 
-interface StarIconProps {
-  className?: string;
-  onClick: () => void;
-}
-interface MessageCircleProps {
-  className?: string;
-}
-interface WidgetProps {
-  projectId?: string;
-}
-export const Widget = ({ projectId }: WidgetProps) => {
-  const [rating, setRating] = useState<number>(3);
-  const [submitted, setSubmitted] = useState<boolean>(false);
+export const Widget = ({ projectId }) => {
+  const [rating, setRating] = useState(3);
+  const [submitted, setSubmitted] = useState ( false);
 
-  const onSelectStar = (index: number) => {
+  const onSelectStar = (index) => {
     setRating(index + 1);
   };
-  const submit = async (e: FormEvent<HTMLFormElement>) => {
+  const submit = async (e) => {
     e.preventDefault();
-    const form = e.currentTarget as HTMLFormElement;
+    const form = e.currentTarget;
     const data = {
       p_project_id: projectId,
-      p_user_name: (form.elements.namedItem("name") as HTMLInputElement).value,
-      p_user_email: (form.elements.namedItem("email") as HTMLInputElement)
-        .value,
-      p_message: (form.elements.namedItem("feedback") as HTMLTextAreaElement)
-        .value,
+      p_user_name: form.elements.namedItem("name").value,
+      p_user_email: form.elements.namedItem("email").value,
+      p_message: form.elements.namedItem("feedback").value,
       p_rating: rating,
     };
-    const {data: returnedData} = await supabase.rpc("add_feedback",data)
+    const { data: returnedData } = await supabase.rpc("add_feedback", data);
     setSubmitted(true);
     console.log(returnedData);
   };
@@ -139,7 +127,7 @@ export const Widget = ({ projectId }: WidgetProps) => {
     </>
   );
 };
-function StarIcon({ className, onClick }: StarIconProps) {
+function StarIcon({ className, onClick }) {
   return (
     <svg
       className={className}
@@ -158,7 +146,7 @@ function StarIcon({ className, onClick }: StarIconProps) {
     </svg>
   );
 }
-function MessageCircleIcon({ className }: MessageCircleProps) {
+function MessageCircleIcon({ className }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
